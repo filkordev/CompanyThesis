@@ -1,0 +1,40 @@
+<tr>
+  <td rowspan="2">
+    <mat-checkbox color="accent" value={{company.id}} (change)="showChbox()"></mat-checkbox>
+  </td>
+  <td rowspan="2" class="td-lg" *ngIf="company.logo!='' && company.logo">
+    <div class="circle text-center text-white">
+      <img src={{company.logo}} class="logo" alt="logo">
+    </div>
+  </td>
+  <td rowspan="2" class="td-lg" *ngIf="company.logo==='' || !company.logo">
+    <div class="circle text-center text-white">
+      <h3 class="m-0 p-0">{{company.name.slice(0,1)}}</h3>
+    </div>
+  </td>
+  <td class="pb-0">
+    <h6><strong>{{company.name}}</strong></h6>
+  </td>
+  <td rowspan="2" class="td-md">{{company.phone}}</td>
+  <td rowspan="2" class="td-md">{{company.email}}</td>
+  <td rowspan="2" class="td-sm">
+    <a href="tel:{{company.phone}}"><span><i class="fa fa-phone"></i></span></a>
+  </td>
+  <td rowspan="2" class="td-sm">
+    <a href="mailto:{{company.email}}"><span><i class="fa fa-envelope"></i></span></a>
+  </td>
+  <td rowspan="2">
+    <button class="btn btn-outline-teal-darken-4 btn-sm waves-effect btn-details" (click)="navigateToDetail(company.id)">
+      <i class="fa fa-angle-double-right"></i> Részletek
+    </button>
+  </td>
+</tr>
+<tr>
+  <td class="td-md pt-0 no-border-td">
+    <span>
+      {{company.headquarter.country.code}}<span *ngIf="company.headquarter.country.code && (company.headquarter.zipcode || company.headquarter.settlement || company.headquarter.address_line)">-</span>{{company.headquarter.zipcode}} 
+      {{company.headquarter.settlement}}<span *ngIf="(company.headquarter.zipcode || company.headquarter.settlement) && company.headquarter.address_line">, </span>
+      {{company.headquarter.address_line}}
+    </span>
+  </td>
+</tr>

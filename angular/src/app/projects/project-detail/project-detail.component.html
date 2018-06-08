@@ -1,0 +1,113 @@
+<section id="project-detail">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card my-5">
+					<div class="card-header bg-teal-darken-4 text-white">
+						<h3 *ngIf="!projectService.isLoading && project; else noheader" class="card-header-h3">{{project.name}} részletei</h3>
+						<ng-template #noheader><h3 class="card-header-h3">...</h3></ng-template>
+					</div>
+					<div class="card-body">
+						<mat-spinner [diameter]="40" color="primary" *ngIf="projectService.isLoading || !project; else elseBlock">
+						</mat-spinner>
+						<ng-template #elseBlock>
+							<div class="row">
+								<div class="col-md-4 text-center m-auto">
+									<h3 class="card-title mb-1">{{project.name}}</h3>
+									<p>({{project.priority.value}})</p>
+								</div>
+								<div class="col"></div>
+								<div class="col-md-7 pl-4 pt-3">
+									<p>
+										<strong>Határidő: </strong>
+										<span [ngStyle]="{'color': (newDate > project.deadline) ? 'red' : 'black'}">
+											{{project.deadline | date:'yyyy-MM-dd'}}
+										</span>
+										<span class="text-danger" *ngIf="newDate > project.deadline">
+											<i class="fa fa-exclamation"></i> (lejárt)
+										</span>
+									</p>
+									<p>
+										<strong>Státusz: </strong>{{project.status.state}}
+									</p>
+									<p>
+										<strong>Bevétel: </strong>
+										{{project.income | number | huDecimal}} {{project.currency.code}}
+									</p>
+									<p>
+										<strong>Kiadás: </strong>
+										{{project.expenditure | number | huDecimal}} {{project.currency.code}}
+									</p>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col pl-4 pt-3">
+									<p><strong>Leírás: </strong></p>
+									<p class="text-muted pl-2">
+										{{project.description}}
+									</p>
+								</div>
+							</div>
+						<hr>
+						<div class="row">
+							<div class="col-md-6">
+								<h3>Cégek</h3>
+								<ul>
+									<li *ngFor="let company of project.company">
+										<a mat-list-item routerLink="/company/shown/{{company.id}}">
+											{{company.name}}
+										</a>
+									</li>
+								</ul>
+							</div>
+							<div class="col-md-6">
+								<h3 class="contact">Névjegyek</h3>
+								<ul>
+									<li *ngFor="let contact of project.contact">
+										<a mat-list-item routerLink="/people/shown/{{contact.id}}">
+											{{contact.full_name}}
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</ng-template>
+					</div>
+					<div class="card-footer bg-teal-lighten-5">
+						<div class="row">
+							<div class="col-lg-2 col-6 col-sm-4 col-md-3 px-2">
+								<a routerLink="../../" class="btn deep-orange deep-orange darken-4 btn-block">Vissza</a>
+							</div>
+						</div>
+					</div>
+				</div>
+				<delete-dialog class="modal fade" id="deleteItemModal" (clickEvent)="clickOnDeleteProductButton(project)" data-backdrop="false">
+				</delete-dialog>
+			</div>
+		</div>
+	</div>
+</section>
+
+	<section id="fabbuton">
+			<button mat-fab [matMenuTriggerFor]="menu" color="accent">
+				<mat-icon aria-hidden="true">clear</mat-icon>
+			</button>
+			<mat-menu #menu="matMenu">
+				<button mat-menu-item>
+					<mat-icon class="fa fa-check"></mat-icon>
+					<span>Kész</span>
+				</button>
+				<button mat-menu-item (click)="createNewContact()">
+					<mat-icon class="fa fa-user-plus"></mat-icon>
+					<span>Új felhasználó</span>
+				</button>
+				<button mat-menu-item (click)="navigateToEdit()">
+					<mat-icon class="fa fa-pencil"></mat-icon>
+					<span>Szerkesztés</span>
+				</button>
+				<button mat-menu-item data-toggle="modal" data-target="#deleteItemModal">
+					<mat-icon class="fa fa-trash"></mat-icon>
+					<span>Törlés</span>
+				</button>
+			</mat-menu>
+	</section>

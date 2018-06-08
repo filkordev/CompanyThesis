@@ -1,0 +1,14 @@
+.main-container {
+    background-color: #e9ebee;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    .main-sidenav{
+        position: fixed;
+        width: 60%;
+        overflow: hidden;
+    }
+}

@@ -1,0 +1,84 @@
+<section id="contact-detail">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card my-5">
+          <div class="card-header bg-teal-darken-4 text-white">
+            <h3 *ngIf="!contactService.isLoading && contact; else noheader" class="card-header-h3">{{contact.full_name}} részletei</h3>
+            <ng-template #noheader><h3 class="card-header-h3">...</h3></ng-template>
+          </div>
+          <div class="card-body">
+            <mat-spinner [diameter]="40" *ngIf="contactService.isLoading || !contact; else elseBlock"></mat-spinner>
+            <ng-template #elseBlock>
+              <div class="row">
+                <div class="col-12 text-center">
+                  <h3 class="py-3">
+                    {{contact.full_name}} <span *ngIf="contact.nickname && contact.nickname !== ''">'{{contact.nickname}}'</span>
+                  </h3>
+                  <p>
+                    <a href="tel:{{contact.phone}}" class="text-dark">
+                      <span><i class="fa fa-phone"></i></span> {{contact.phone}}
+                    </a>
+                  </p>
+                  <p class="pb-3">
+                    <a href="mailto:{{contact.email}}" class="text-dark">
+                      <span><i class="fa fa-envelope"></i></span> {{contact.email}}
+                    </a>
+                  </p>
+                </div>
+              </div>
+              <hr>
+              <div class="row">
+                <div class="col-md-6">
+                  <h3>Cégek</h3>
+                  <ul>
+                    <li *ngFor="let company of contact.company">
+                      <a mat-list-item routerLink="/company/shown/{{company.id}}">
+                        {{company.name}}
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-md-6">
+                  <h3>Projektek</h3>
+                  <ul>
+                    <li *ngFor="let project of contact.project">
+                      <a mat-list-item routerLink="/project/shown/{{project.id}}">
+                        {{project.name}}
+                      </a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+          <div class="card-footer bg-teal-lighten-5">
+            <div class="row">
+              <div class="col-lg-2 col-6 col-sm-4 col-md-3 px-2">
+                <a routerLink="../../" class="btn deep-orange deep-orange darken-4 btn-block">Vissza</a>
+              </div>
+            </div>
+          </div>
+        </div>
+          <delete-dialog class="modal fade" id="deleteItemModal" (clickEvent)="clickOnDeleteProductButton(contact)" data-backdrop="false">
+          </delete-dialog>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="fabbuton">
+  <button mat-fab [matMenuTriggerFor]="menu" color="accent" >
+    <mat-icon aria-hidden="true">clear</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item (click)="navigateToEdit()">
+      <mat-icon class="fa fa-pencil"></mat-icon>
+      <span>Szerkesztés</span>
+    </button>
+    <button mat-menu-item data-toggle="modal" data-target="#deleteItemModal">
+      <mat-icon class="fa fa-trash"></mat-icon>
+      <span>Törlés</span>
+    </button>
+  </mat-menu>
+</section>

@@ -1,0 +1,27 @@
+@import "../../../default-styles.scss";
+@import "../../../variables.scss";
+$dark-overlay: rgba(0,0,0,0.6);
+
+#sidenav{
+    background-size: cover;
+    background-attachment: fixed;
+    height: 100%;
+    #user-side{
+        background-color: $teal-darken-4;
+        border-bottom: 1px solid #555;
+        #user-icon{
+            .fa{
+                font-size: 80px;
+            }
+        }
+    }
+    .nav-link{
+        border-bottom: 1px solid $teal;
+        padding: 15px;
+        color: $teal-darken-4;
+    }
+
+    a.nav-link.active{
+        background: rgba(0, 77, 64, 0.2);
+    }
+}

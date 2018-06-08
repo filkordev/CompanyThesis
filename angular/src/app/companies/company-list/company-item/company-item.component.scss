@@ -1,0 +1,41 @@
+@import "../../../../variables.scss";
+@import "../../../../default-styles.scss";
+
+.logo{
+    display: none;
+}
+
+@media (min-width: $screen-size-lg) {
+    .logo{
+        display: inline-block;
+        width: 33.33334px;
+        height: 33.33334px;
+    }
+}
+
+@media (min-width: $screen-size-xl) {
+    .logo{
+        display: inline-block;
+        width: 40px;
+        height: 40px;
+    }
+}
+
+@media (min-width: $screen-size-lg) {
+    .circle { 
+        width: 50px;
+        height: 50px;
+        background: $teal-darken-4;
+        -moz-border-radius: 50%;
+        -webkit-border-radius: 50%;
+        border-radius: 50%;
+        display: table-cell; vertical-align: middle;
+    }
+}
+
+@media (min-width: $screen-size-xl) {
+    .circle{
+        width: 60px;
+        height: 60px;
+    }
+}

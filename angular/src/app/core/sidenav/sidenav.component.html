@@ -1,0 +1,28 @@
+<section id="sidenav">
+  <div class="container-fluid">
+    <div id="user-side" class="row text-white">
+      <div class="col text-center py-3">
+        <span id="user-icon"><i class="fa fa-user-circle"></i></span>
+        <h4 class="py-2">Üdvözlöm!</h4>
+        <button class="btn btn-deep-orange deep-orange darken-4 px-3" (click)="onClickNavLink()">
+          <i class="fa fa-sign-out"></i> Kijelentkezés
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col p-0">
+        <nav class="nav flex-column">
+          <a class="nav-link" routerLink="/company" (click)="onClickNavLink()" routerLinkActive="active">
+            <h5><i class="fa fa-industry px-2"></i> Cégek</h5>
+          </a>
+          <a class="nav-link" routerLink="/project" (click)="onClickNavLink()" routerLinkActive="active">
+            <h5><i class="fa fa-folder px-2"></i> Projektek</h5>
+          </a>
+          <a class="nav-link" routerLink="/people" (click)="onClickNavLink()" routerLinkActive="active">
+            <h5><i class="fa fa-address-book px-2"></i> Névjegyek</h5>
+          </a>
+        </nav>
+      </div>
+    </div>
+  </div>
+</section>

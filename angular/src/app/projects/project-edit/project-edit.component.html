@@ -1,0 +1,90 @@
+<section id="project-edit">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="card my-5">
+					<div class="card-header bg-teal-darken-4 text-white">
+						<h3 class="card-header-h3" *ngIf="!edit; else editblock">Új Projekt</h3>
+						<ng-template #editblock>
+							<h3 class="card-header-h3" *ngIf="!projectService.isLoading && project && !projectService.isLoadingForEdit && !companyService.isLoading; else noheader">{{project.name}} Szerkesztése</h3>
+							<ng-template #noheader><h3 class="card-header-h3">...</h3></ng-template>
+						</ng-template>
+					</div>
+					<div class="card-body">
+						<mat-spinner [diameter]="40" *ngIf="projectService.isLoading || !project || projectService.isLoadingForEdit || companyService.isLoading; else elseBlock">
+						</mat-spinner>
+						<ng-template #elseBlock>
+							<div class="row">
+								<form class="edit-form" [formGroup]="projectForm" (ngSubmit)="onSubmit(project)">
+									<mat-form-field>
+										<input matInput [(ngModel)]="project.name" formControlName="projectName" placeholder="Név*">
+									</mat-form-field>
+									<mat-error *ngIf="!projectForm.controls['projectName'].valid && projectForm.controls['projectName'].touched">
+										A név mező megadása <strong>kötelező</strong>!
+									</mat-error>
+									<mat-form-field>
+										<textarea matInput [(ngModel)]="project.description" formControlName="projectDescription" placeholder="Leírás" matTextareaAutosize matAutosizeMinRows="2" matAutosizeMaxRows="5"></textarea>
+									</mat-form-field>
+									<mat-form-field>
+										<mat-select [compareWith]="compareFn" [(ngModel)]="project.company" (selectionChange)="companyChanged = true" formControlName="projectCompany" placeholder="Cég" multiple>
+											<mat-option *ngFor="let company of companyService.getItems()" [value]="company">{{company.name}}</mat-option>
+										</mat-select>
+									</mat-form-field>
+									<mat-form-field class="example-full-width">
+										<input matInput [(ngModel)]="project.deadline" [ngModelOptions]="{standalone: true}" [matDatepicker]="picker" placeholder="Válasszon dátumot">
+										<mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+										<mat-datepicker touchUi="true" #picker></mat-datepicker>
+									  </mat-form-field>
+									<mat-form-field>
+										<mat-select formControlName="projectStatus" placeholder="Státusz" [compareWith]="compareFn" [(ngModel)]="project.status">
+											<mat-option *ngFor="let status of projectService.getStatuses()" [value]="status">
+												{{status.state}}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>	
+									<mat-form-field>
+										<mat-select formControlName="projectPriority" placeholder="Prioritás" [compareWith]="compareFn" [(ngModel)]="project.priority">
+											<mat-option *ngFor="let priority of projectService.getPriorities()" [value]="priority">
+												{{priority.value}}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+									<mat-form-field>
+										<mat-select formControlName="projectCurrency" placeholder="Pénznem" [compareWith]="compareFn" [(ngModel)]="project.currency">
+											<mat-option *ngFor="let currency of projectService.getCurrencies()" [value]="currency">
+												{{currency.name}}
+											</mat-option>
+										</mat-select>
+									</mat-form-field>
+									<mat-form-field>
+										<input type="number" matInput [(ngModel)]="project.income" formControlName="projectIncome" placeholder="Bevétel">
+									</mat-form-field>
+									<mat-error *ngIf="!projectForm.controls['projectIncome'].valid && projectForm.controls['projectIncome'].touched">
+										Nem megfelelő formátum!
+									</mat-error>	
+									<mat-form-field>
+										<input type="number" matInput [(ngModel)]="project.expenditure" formControlName="projectExpenditure" placeholder="Kiadás">
+									</mat-form-field>
+									<mat-error *ngIf="!projectForm.controls['projectExpenditure'].valid && projectForm.controls['projectExpenditure'].touched">
+										Nem megfelelő formátum!
+									</mat-error>
+									<div class="row mx-2 mt-5">
+										<div class="col-md-6 col-sm-4 col-0"></div>
+										<div class="col-md-3 col-sm-4 col-6">
+											<button class="btn btn-grey btn-block" (click)="navigateBack()">Mégse</button>
+										</div>
+										<div class="col-md-3 col-sm-4 col-6">
+											<button type="submit" [disabled]="!projectForm.valid" class="btn deep-orange deep-orange darken-4 btn-block">
+												Mentés
+											</button>
+										</div>				
+									</div>
+								</form>
+							</div>
+						</ng-template>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
